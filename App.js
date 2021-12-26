@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,7 +24,27 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {Alert} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+
 const App: () => React$Node = () => {
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    messaging()
+      .getToken()
+      .then((token) => {
+        console.log('Device Token', token);
+      })
+      .catch((err) => {
+        console.log('Device Token::Error', err);
+      });
+
+    return unsubscribe;
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
