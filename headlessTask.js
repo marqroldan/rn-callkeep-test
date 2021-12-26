@@ -1,3 +1,3 @@
 module.exports = async (taskData) => {
-  console.log('Headless task, yay!');
+  console.log('Headless task, yay!', {taskData});
 };
