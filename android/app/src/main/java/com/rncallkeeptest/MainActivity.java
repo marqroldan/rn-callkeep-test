@@ -1,4 +1,4 @@
-package com.rncallkeeptest;
+package com.rnvoipcall;
 
 import com.facebook.react.ReactActivity;
 
