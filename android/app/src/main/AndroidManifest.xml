@@ -33,5 +33,5 @@
                 android:turnScreenOn="true"
                 android:exported="false" />
     </application>
-
+    <service android:name="com.example.MyTaskService" />
 </manifest>
