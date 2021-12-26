@@ -32,6 +32,6 @@
                 android:showWhenLocked="true"
                 android:turnScreenOn="true"
                 android:exported="false" />
+        <service android:name="com.example.MyTaskService" />
     </application>
-    <service android:name="com.example.MyTaskService" />
 </manifest>
