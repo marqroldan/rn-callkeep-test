@@ -1,6 +1,8 @@
 package com.rnvoipcall;
 
 import com.facebook.react.ReactActivity;
+// Import the NotifeeApiModule
+import io.invertase.notifee.NotifeeApiModule;
 
 public class MainActivity extends ReactActivity {
 
@@ -10,6 +12,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "rnvoipcall";
+    return NotifeeApiModule.getMainComponent("rnvoipcall");
   }
 }
