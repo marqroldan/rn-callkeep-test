@@ -14,6 +14,8 @@ import {
   View,
   Text,
   StatusBar,
+  AppRegistry,
+  PermissionsAndroid,
 } from 'react-native';
 
 import {
@@ -23,12 +25,40 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import notifee, {
+  AndroidCategory,
+  AndroidImportance,
+  AndroidVisibility,
+} from '@notifee/react-native';
 
 import {Alert} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
+const _requestAudioPermission = () => {
+  return PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+    {
+      title: 'Need permission to access microphone',
+      message: 'To run this demo we need permission to access your microphone',
+      buttonNegative: 'Cancel',
+      buttonPositive: 'OK',
+    },
+  );
+};
+
+const _requestCameraPermission = () => {
+  return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+    title: 'Need permission to access camera',
+    message: 'To run this demo we need permission to access your camera',
+    buttonNegative: 'Cancel',
+    buttonPositive: 'OK',
+  });
+};
+
 const App: () => React$Node = () => {
   useEffect(() => {
+    const settings = notifee.requestPermission();
+
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
@@ -41,6 +71,10 @@ const App: () => React$Node = () => {
       .catch((err) => {
         console.log('Device Token::Error', err);
       });
+
+    _requestAudioPermission();
+
+    _requestCameraPermission();
 
     return unsubscribe;
   }, []);
@@ -132,3 +166,16 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+function FullScreenComponent(): any {
+  return (
+    // eslint-disable-next-line react-native/no-inline-styles
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>FullScreen Launch Activity ???? </Text>
+    </View>
+  );
+}
+
+AppRegistry.registerComponent('application', () => FullScreenComponent);
+
+AppRegistry.registerComponent('custom', () => FullScreenComponent);
